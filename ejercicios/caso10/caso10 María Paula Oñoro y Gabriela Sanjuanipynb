@@ -1,0 +1,1638 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Cuarta actividad evaluativa\n",
+    "\n",
+    "Profesor Alfonso Cervantes Barragán - 05-10-2020\n",
+    "\n",
+    "Universidad Sergio Arboleda - Informatica III"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Descripción del contexto.\n",
+    "\n",
+    "En esta actividad el estudiante debera realizar un análisis exploratorio de Datos (EDA) del dataset *poblacion_prision_india.csv*, que contiene información sobre la población de prisioneros en la India de los años 2001 al 2013.  \n",
+    "\n",
+    "La descripción de las columnas del dataset es la siguiente:\n",
+    "\n",
+    "|Columna |\tDescripción |  \n",
+    "|--------|--------------|\n",
+    "|States_UT_Name\t|Estado en donde se llevo el censo |   \n",
+    "|year| año del censo|   \n",
+    "|Jail_type|\tTipo de institución  | \n",
+    "|year |\taño de la observación|   \n",
+    "|Male Convicts | Convictos masculinos|  \n",
+    "|Female_Convicts |\tConvictos femeninos|  \n",
+    "|Total_Convicts|\tNúmero total de convictos |  \n",
+    "|Male_under_trial| \tHombres bajo juicio  | \n",
+    "|Femail_under_trial| Mujeres bajo juicio | \n",
+    "|Total_under_trial| Total de personas bajo juicio|\n",
+    "|Male_detenues| detenidos masculinos|\n",
+    "|Female_detenues|detenidos femeninos|\n",
+    "|Total_detenues| total de detenidos|\n",
+    "|Male_Others| ocupantes masculinos bajo otra razón|\n",
+    "|Female_others|ocupantes femeninos bajo otra razón|\n",
+    "|Total_others|Número total de ocupantes bajo otra razón|\n",
+    "|Total_male|Número total de ocupantes masculinos|\n",
+    "|Total_female|Número total de ocupantes femeninos|\n",
+    "|Grand_total| Número total de ocupantes|\n",
+    "\n",
+    "\n",
+    "\n",
+    "#### Entregable\n",
+    "\n",
+    "El estudiante debera entregar un documento con extensión *ipynb* mediante el taller \"Cuarta Evaluación \" que se encuentra en el curso virtual Informatica III en el plataforma Sergio Virtual\n",
+    "\n",
+    "\n",
+    "#### Plazo\n",
+    "\n",
+    "El plazo de entrega sera hasta el sabado, 24 de octubre a las 11:30 p.m. En el aula del curso en la plataforma Sergio Virtual estará disponible un taller en el cual deberan subir el archivo .ipynb (Jupyter notebook) con todo el código requerido. \n",
+    "\n",
+    "No esta permitido resolver los ejercicios a mano ni ingresar la respuesta sin que haya un código que lo respalde.\n",
+    "\n",
+    "#### Donde puedo trabajar?\n",
+    "\n",
+    "Este ejercicio se puede realizar en el entorno virtual creado con base en el repositorio github.com/alfonsocerv/datascience en la carpeta /ejericicio/caso10.\n",
+    "\n",
+    "#### Criterios de evaluación\n",
+    "\n",
+    "1. Todo el código requerido debe estar presente. Cada ejercicio debe tener su respectiva respuesta.\n",
+    "2. No pueden haber errores que se generen al ejecutar el código.\n",
+    "3. El código debe cumplir con las especificaciones de cada ejercicio."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 1\n",
+    "\n",
+    "#### Importa las librerias pandas, numpy y matplotlib\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#cargamos la base de datos\n",
+    "data = pd.read_csv(\"poblacion_prision_india.csv\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 2\n",
+    "\n",
+    "#### Queremos saber de manera general de qué se trata esta base de datos\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>State_UT_name</th>\n",
+       "      <th>Year</th>\n",
+       "      <th>Jail_Type</th>\n",
+       "      <th>Male Convicts</th>\n",
+       "      <th>Female_Convicts</th>\n",
+       "      <th>Total_Convicts</th>\n",
+       "      <th>Male_Under_trial</th>\n",
+       "      <th>Female_Under_trial</th>\n",
+       "      <th>Total_Under_trial</th>\n",
+       "      <th>Male_Detenues</th>\n",
+       "      <th>Female_Detenues</th>\n",
+       "      <th>Total_Detenues</th>\n",
+       "      <th>Male_Others</th>\n",
+       "      <th>Female_Others</th>\n",
+       "      <th>Total_Others</th>\n",
+       "      <th>Total_Male</th>\n",
+       "      <th>Total_Female</th>\n",
+       "      <th>Grand_Total</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>Central Jail</td>\n",
+       "      <td>3372</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3375</td>\n",
+       "      <td>2718</td>\n",
+       "      <td>114</td>\n",
+       "      <td>2832</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>22</td>\n",
+       "      <td>0</td>\n",
+       "      <td>22</td>\n",
+       "      <td>6116</td>\n",
+       "      <td>117</td>\n",
+       "      <td>6233</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>District Jail</td>\n",
+       "      <td>294</td>\n",
+       "      <td>1</td>\n",
+       "      <td>295</td>\n",
+       "      <td>2379</td>\n",
+       "      <td>136</td>\n",
+       "      <td>2515</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2673</td>\n",
+       "      <td>137</td>\n",
+       "      <td>2810</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>Sub_Jail</td>\n",
+       "      <td>188</td>\n",
+       "      <td>10</td>\n",
+       "      <td>198</td>\n",
+       "      <td>3263</td>\n",
+       "      <td>151</td>\n",
+       "      <td>3414</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3451</td>\n",
+       "      <td>161</td>\n",
+       "      <td>3612</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>Women Jail</td>\n",
+       "      <td>0</td>\n",
+       "      <td>88</td>\n",
+       "      <td>88</td>\n",
+       "      <td>0</td>\n",
+       "      <td>81</td>\n",
+       "      <td>81</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>170</td>\n",
+       "      <td>170</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>Borstal School</td>\n",
+       "      <td>17</td>\n",
+       "      <td>0</td>\n",
+       "      <td>17</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>17</td>\n",
+       "      <td>0</td>\n",
+       "      <td>17</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    State_UT_name  Year       Jail_Type  Male Convicts  Female_Convicts  \\\n",
+       "0  Andhra Pradesh  2001    Central Jail           3372                3   \n",
+       "1  Andhra Pradesh  2001   District Jail            294                1   \n",
+       "2  Andhra Pradesh  2001        Sub_Jail            188               10   \n",
+       "3  Andhra Pradesh  2001      Women Jail              0               88   \n",
+       "4  Andhra Pradesh  2001  Borstal School             17                0   \n",
+       "\n",
+       "   Total_Convicts  Male_Under_trial  Female_Under_trial  Total_Under_trial  \\\n",
+       "0            3375              2718                 114               2832   \n",
+       "1             295              2379                 136               2515   \n",
+       "2             198              3263                 151               3414   \n",
+       "3              88                 0                  81                 81   \n",
+       "4              17                 0                   0                  0   \n",
+       "\n",
+       "   Male_Detenues  Female_Detenues  Total_Detenues  Male_Others  Female_Others  \\\n",
+       "0              4                0               4           22              0   \n",
+       "1              0                0               0            0              0   \n",
+       "2              0                0               0            0              0   \n",
+       "3              0                1               1            0              0   \n",
+       "4              0                0               0            0              0   \n",
+       "\n",
+       "   Total_Others  Total_Male  Total_Female  Grand_Total  \n",
+       "0            22        6116           117         6233  \n",
+       "1             0        2673           137         2810  \n",
+       "2             0        3451           161         3612  \n",
+       "3             0           0           170          170  \n",
+       "4             0          17             0           17  "
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Podemos decir que es una base de datos que nos muestra por medio del año en que realizó un censo, el tipo de carcel y el Estado donde se encuentra ubicado, la información de los prisioneros de la India, tanto de hombres como mujeres.\n",
+    "Registra si se encuentran detenidos, están bajo fianza o bajo juicio, también nos muestra el total de ocupantes."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 3\n",
+    "\n",
+    "#### Queremos tener de manera más puntual los nombres de las columnas que se tuvieron en cuenta"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['State_UT_name', 'Year', 'Jail_Type', 'Male Convicts',\n",
+       "       'Female_Convicts', 'Total_Convicts', 'Male_Under_trial',\n",
+       "       'Female_Under_trial', 'Total_Under_trial', 'Male_Detenues',\n",
+       "       'Female_Detenues', 'Total_Detenues', 'Male_Others', 'Female_Others',\n",
+       "       'Total_Others', 'Total_Male', 'Total_Female', 'Grand_Total'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "18"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.shape[1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Ahora si conocemos todos los elementos que se tuvieron en cuenta para la realización de este censo. En total fueron 18 columnas"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 4\n",
+    "\n",
+    "#### Queremos saber durante cuántos años se realizaron los censos y cuántos en total se realizaron \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4023"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.shape[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "13"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Year\"].nunique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "En la India durante 13 años, se realizaron 4023 censos para obtener información sobre los prisioneros."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 5\n",
+    "#### Queremos analizar qué datos se obtuvieron en el primer censo que se realizó"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>State_UT_name</th>\n",
+       "      <th>Year</th>\n",
+       "      <th>Jail_Type</th>\n",
+       "      <th>Male Convicts</th>\n",
+       "      <th>Female_Convicts</th>\n",
+       "      <th>Total_Convicts</th>\n",
+       "      <th>Male_Under_trial</th>\n",
+       "      <th>Female_Under_trial</th>\n",
+       "      <th>Total_Under_trial</th>\n",
+       "      <th>Male_Detenues</th>\n",
+       "      <th>Female_Detenues</th>\n",
+       "      <th>Total_Detenues</th>\n",
+       "      <th>Male_Others</th>\n",
+       "      <th>Female_Others</th>\n",
+       "      <th>Total_Others</th>\n",
+       "      <th>Total_Male</th>\n",
+       "      <th>Total_Female</th>\n",
+       "      <th>Grand_Total</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Andhra Pradesh</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>Central Jail</td>\n",
+       "      <td>3372</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3375</td>\n",
+       "      <td>2718</td>\n",
+       "      <td>114</td>\n",
+       "      <td>2832</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>22</td>\n",
+       "      <td>0</td>\n",
+       "      <td>22</td>\n",
+       "      <td>6116</td>\n",
+       "      <td>117</td>\n",
+       "      <td>6233</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    State_UT_name  Year     Jail_Type  Male Convicts  Female_Convicts  \\\n",
+       "0  Andhra Pradesh  2001  Central Jail           3372                3   \n",
+       "\n",
+       "   Total_Convicts  Male_Under_trial  Female_Under_trial  Total_Under_trial  \\\n",
+       "0            3375              2718                 114               2832   \n",
+       "\n",
+       "   Male_Detenues  Female_Detenues  Total_Detenues  Male_Others  Female_Others  \\\n",
+       "0              4                0               4           22              0   \n",
+       "\n",
+       "   Total_Others  Total_Male  Total_Female  Grand_Total  \n",
+       "0            22        6116           117         6233  "
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data.head(1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Se puede decir que el primer censo se realizó en el año 2001, en el Estado de Andhra Pradesh en un tipo de carcel Central Jail.                   En el cual se reportó una diferencia extrema entre los numeros de convictos hombres con los convictos mujeres, siendo esta aproximadamente el 0.01% del numero de hombres.\n",
+    "También podriamos decir que en general los datos obtenidos en esta carcel, demuestran que hay una diferencia muy marcada entre el registro de hombres y mujeres, esto de podría deber a que en ese Estado o esa zona, no hay muchas habitantes mujeres o las mujeres no cometen tantos delitos. \n",
+    "Al momento de realizar este censo, se encontraban 6233 ocupantes."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 6\n",
+    "\n",
+    "#### Queremos saber los tipos de las carceles donde se llevaron a cabo los censos"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array(['Central Jail', 'District Jail', 'Sub_Jail', 'Women Jail',\n",
+       "       'Borstal School', 'Open Jail', 'Special Jail', 'Others', 'Total'],\n",
+       "      dtype=object)"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Jail_Type\"].unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Se tuvieron en cuenta para realizar esta recolección de datos, los tipos de carceles Centrak Jail, Dristrict Jail, Sub Jail, Women Jail, Borstal School, Open Jail, Special Jail y Others, siendo este último carceles que no se clasifican entre las anteriores."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 7\n",
+    "\n",
+    "#### Queremos saber el número total de hombres convictos por año en toda la India "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Male Convicts</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Year</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>146948</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>158918</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>176792</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>190338</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>210058</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>225542</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>232114</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2008</th>\n",
+       "      <td>237828</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2009</th>\n",
+       "      <td>238706</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2010</th>\n",
+       "      <td>242314</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011</th>\n",
+       "      <td>247266</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2012</th>\n",
+       "      <td>245552</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2013</th>\n",
+       "      <td>248526</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      Male Convicts\n",
+       "Year               \n",
+       "2001         146948\n",
+       "2002         158918\n",
+       "2003         176792\n",
+       "2004         190338\n",
+       "2005         210058\n",
+       "2006         225542\n",
+       "2007         232114\n",
+       "2008         237828\n",
+       "2009         238706\n",
+       "2010         242314\n",
+       "2011         247266\n",
+       "2012         245552\n",
+       "2013         248526"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[[\"Year\",\"Male Convicts\"]].groupby([\"Year\"]).sum() "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Podemos observar que en la India, al 2001 hubo 146948 hombres convictos y al 2013 hubo 248526, es decir que podemos notar que el año y el número de prisioneros, año tras año aumenta de manera proporcional, sin embargo no significa que sera algo que siempre deba ser así porque muchos factores influyen en esta, pero en este caso podemos decir que se nota una proporción. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 8\n",
+    "\n",
+    "#### Queremos saber el número total de mujeres convictas por año en toda la India "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Female_Convicts</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Year</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>4378</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>5324</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>6740</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>6716</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>7086</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>7808</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>8116</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2008</th>\n",
+       "      <td>8786</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2009</th>\n",
+       "      <td>9176</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2010</th>\n",
+       "      <td>9264</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011</th>\n",
+       "      <td>9918</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2012</th>\n",
+       "      <td>10026</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2013</th>\n",
+       "      <td>10690</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      Female_Convicts\n",
+       "Year                 \n",
+       "2001             4378\n",
+       "2002             5324\n",
+       "2003             6740\n",
+       "2004             6716\n",
+       "2005             7086\n",
+       "2006             7808\n",
+       "2007             8116\n",
+       "2008             8786\n",
+       "2009             9176\n",
+       "2010             9264\n",
+       "2011             9918\n",
+       "2012            10026\n",
+       "2013            10690"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[[\"Year\",\"Female_Convicts\"]].groupby([\"Year\"]).sum() "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Como podemos observar es un promedio bajo de mujeres convictas durante cada año, ya que teniendo en cuenta que en el año 2001, 4378 mujeres lo estuvieron y que el año que mayor número tuvo fue en el 2013 siendo estas 10690. Aproximadamente solo el 2.8% de la cantidad de convictos hombres.\n",
+    "La tabla también refleja resultados ascendentes, esto significa que en promedio cada año incrementa el número de convictas en las carceles, sin embargo es un incremento mínimo, con un rango aproximado de 946 en cada año."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 9\n",
+    "\n",
+    "#### Queremos saber a lo largo de los 13 años, cuantos convictos incluyendo hombres y mujeres hubo en la India"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2800902"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Female_Convicts\"].sum() \n",
+    "data[\"Male Convicts\"].sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "104028"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Female_Convicts\"].sum()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Teniendo en cuenta los dos registros, se dice que durante los 13 años 2.800.902 personas pasaron como convictos incluyendo hombres y mujeres, siendo 104.028 de estas, mujeres. Representando solo el 3,71% de los convictos durante todo el censo."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 10\n",
+    "\n",
+    "#### Queremos saber el promedio de personas que a lo largo de los 13 años han estado bajo juicio en la India\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "6268960.0"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Total_Under_trial\"].sum().mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Con esta información podemos determinar también un promedio por año, lo cual significaría un promedio de 522.413 personas que anual estuvieron bajo juicio en la India "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 11\n",
+    "\n",
+    "#### Queremos saber que ocupantes en total durante los 13 años que se realizó el censo, hubo en cada tipo de carcel en el estado de A & N Islands y sacar alguna conclusión"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th>Grand_Total</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>State_UT_name</th>\n",
+       "      <th>Jail_Type</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th rowspan=\"9\" valign=\"top\">A &amp; N Islands</th>\n",
+       "      <th>Borstal School</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Central Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>District Jail</th>\n",
+       "      <td>6229</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Open Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Others</th>\n",
+       "      <td>30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Special Jail</th>\n",
+       "      <td>346</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Sub_Jail</th>\n",
+       "      <td>140</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Total</th>\n",
+       "      <td>6745</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Women Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                              Grand_Total\n",
+       "State_UT_name Jail_Type                  \n",
+       "A & N Islands Borstal School            0\n",
+       "              Central Jail              0\n",
+       "              District Jail          6229\n",
+       "              Open Jail                 0\n",
+       "              Others                   30\n",
+       "              Special Jail            346\n",
+       "              Sub_Jail                140\n",
+       "              Total                  6745\n",
+       "              Women Jail                0"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[[\"State_UT_name\",\"Grand_Total\", \"Jail_Type\"]].groupby([\"State_UT_name\",\"Jail_Type\"]).sum().head(9)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Con esta información podemos concluir que en el Estado de A & N Islands, no se encuentran tipos de carcel Borstal School, Central Jail, Open Jail, Women Jail, ya que durante 13 años no se registró ningun ocupante en esas categorías.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 12\n",
+    "\n",
+    "#### Queremos saber cuantos presos quedaron registrados en el año 2001 en el Estado de Andhra Pradesh sin tener el cuenta el tipo de carcel"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "9"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[(data[\"Year\"] == 2001) & (data [\"State_UT_name\"] == \"Andhra Pradesh\")].shape [0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Se puede decir que el 2001 fue un año donde el Estado de Andhra Pradesh no se presentaron muchos arrestos y podríamos decir que la población tiene buen comportamiento, o que es un Estado pequeño y por eso no hay tantos habiantes."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 13\n",
+    "\n",
+    "#### Cuál fue la número máximo de mujeres detenidas por otra razón que recibió la carcel de tipo para mujeres en el año 2002  \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th>Female_Others</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Year</th>\n",
+       "      <th>Jail_Type</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th rowspan=\"9\" valign=\"top\">2001</th>\n",
+       "      <th>Borstal School</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Central Jail</th>\n",
+       "      <td>30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>District Jail</th>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Open Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Others</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Special Jail</th>\n",
+       "      <td>143</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Sub_Jail</th>\n",
+       "      <td>832</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Total</th>\n",
+       "      <td>1441</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Women Jail</th>\n",
+       "      <td>436</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th rowspan=\"9\" valign=\"top\">2002</th>\n",
+       "      <th>Borstal School</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Central Jail</th>\n",
+       "      <td>32</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>District Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Open Jail</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Others</th>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Special Jail</th>\n",
+       "      <td>123</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Sub_Jail</th>\n",
+       "      <td>528</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Total</th>\n",
+       "      <td>1366</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Women Jail</th>\n",
+       "      <td>683</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                     Female_Others\n",
+       "Year Jail_Type                    \n",
+       "2001 Borstal School              0\n",
+       "     Central Jail               30\n",
+       "     District Jail               4\n",
+       "     Open Jail                   0\n",
+       "     Others                      0\n",
+       "     Special Jail              143\n",
+       "     Sub_Jail                  832\n",
+       "     Total                    1441\n",
+       "     Women Jail                436\n",
+       "2002 Borstal School              0\n",
+       "     Central Jail               32\n",
+       "     District Jail               0\n",
+       "     Open Jail                   0\n",
+       "     Others                      0\n",
+       "     Special Jail              123\n",
+       "     Sub_Jail                  528\n",
+       "     Total                    1366\n",
+       "     Women Jail                683"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[[\"Female_Others\",\"Jail_Type\",\"Year\"]].groupby([\"Year\", \"Jail_Type\"]).max().head(18)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "En el 2002, 683 mujeres fueron detenidas por otras razones en carceles solo para mujeres, incrementando 247 registros desde el año 2001. Un incremento considerable porque siempre hemos visto que el número de mujeres es menor al de los hombres."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 14\n",
+    "\n",
+    "#### Queremos mirar en cuántos Estados se realizó el censo y para eso agruparemos las categorias según su frecuencia "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "count          4023\n",
+       "unique           36\n",
+       "top       Karnataka\n",
+       "freq            117\n",
+       "Name: State_UT_name, dtype: object"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"State_UT_name\"].describe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Podemos observar que el censo se realizó en 36 Estados de la India, con un total de 4023 registros, por lo cual podríamos determinar un promedio de 111.75 registros por Estado, lo cual nos gustaría probar para saber un número más exacto por Estado."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 15\n",
+    "\n",
+    "#### Queremos confirmar la conclusión anterior y saber cuántos registros por Estado se realizaron"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Karnataka            117\n",
+       "Uttaranchal          117\n",
+       "Madhya Pradesh       117\n",
+       "Meghalaya            117\n",
+       "Lakshadweep          117\n",
+       "Himachal Pradesh     117\n",
+       "Goa                  117\n",
+       "Nagaland             117\n",
+       "Kerala               117\n",
+       "Punjab               117\n",
+       "Uttar Pradesh        117\n",
+       "Daman & Diu          117\n",
+       "Orissa               117\n",
+       "Maharashtra          117\n",
+       "Tripura              117\n",
+       "West Bengal          117\n",
+       "D & N Haveli         117\n",
+       "A & N Islands        117\n",
+       "Manipur              117\n",
+       "Tamilnadu            117\n",
+       "Delhi                117\n",
+       "Jharkhand            117\n",
+       "Andhra Pradesh       117\n",
+       "Rajasthan            117\n",
+       "Bihar                117\n",
+       "Sikkim               117\n",
+       "Haryana              117\n",
+       "Mizoram              117\n",
+       "Gujarat              117\n",
+       "Chandigarh           117\n",
+       "Assam                117\n",
+       "Jammu & Kashmir      117\n",
+       "Pondicherry          117\n",
+       "Chhattisgarh         108\n",
+       "Arunachal Pradesh     45\n",
+       "Chhatisgarh            9\n",
+       "Name: State_UT_name, dtype: int64"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"State_UT_name\"].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([117, 108,  45,   9])"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"State_UT_name\"].value_counts().unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "117, 108, 45 y 9 fueron las unicas variables de los numeros de censos que en cada Estado se realizaron. No quiere decir que solo se realizaron 117, 108, 45 y 9 censos, no. Sino que fueron los unicos valores que el archivo reconoce como asignados a los Estados.\n",
+    "Y teniendo en cuenta la tabla anterior, podemos ver que en el Estado de Chhatisgash solo se realizaron 9 pruebas, en Arunachal Pradesh 45 y en Chhattisash 108, por lo cual podemos determinar que en cada uno de los 33 Estados restantes se realizaron 117 censos.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 16\n",
+    "\n",
+    "#### Seguiremos comprobando la conclusión del ejercicio 13"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "111.75"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"State_UT_name\"].value_counts().mean()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "21.33859682091853"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"State_UT_name\"].value_counts().std()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Confrimamos que el promedio de censos por Estado es de 111.75 con una desviación estandar de 21.34 lo cual nos permite afirmar que los datos se encuentran bien ya que el registro máximo por Estado fue de 117, estando dentro del rango de la desviación."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 17\n",
+    "\n",
+    "####  Queremos saber el número máximo registrado durante esos 13 años de hombres que estuvieron bajo juicio en la India"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "57017"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[\"Male_Under_trial\"].max()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "En la India entre el 2001 y el 2013, el máximo de hombres que estuvieron bajo juicio en un mismo año y en un mismo tipo de carcel fue de 57.017 "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Ejercicio 18\n",
+    "\n",
+    "#### Queremos determinar el número de ocupantes que se presentaron durante cada año en las carceles de la Indía"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Grand_Total</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Year</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>627270</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>644714</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>653038</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>662782</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>716736</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>746542</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>752792</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2008</th>\n",
+       "      <td>769506</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2009</th>\n",
+       "      <td>753938</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2010</th>\n",
+       "      <td>737996</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2011</th>\n",
+       "      <td>745852</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2012</th>\n",
+       "      <td>770270</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2013</th>\n",
+       "      <td>823984</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      Grand_Total\n",
+       "Year             \n",
+       "2001       627270\n",
+       "2002       644714\n",
+       "2003       653038\n",
+       "2004       662782\n",
+       "2005       716736\n",
+       "2006       746542\n",
+       "2007       752792\n",
+       "2008       769506\n",
+       "2009       753938\n",
+       "2010       737996\n",
+       "2011       745852\n",
+       "2012       770270\n",
+       "2013       823984"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "data[[\"Year\",\"Grand_Total\"]].groupby([\"Year\"]).sum().head(13)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Podemos observar que cada año si se presenta un incremento en el total de ocupantes, solo en el año 2009 hubo una disminución de 15.568 personas a comparación del año anterior."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
